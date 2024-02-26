@@ -8,15 +8,17 @@ services:
       - "8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
+      - redis
       - database
     volumes:
-    - .:/app
+      - .:/app
   database:
     image: postgres:13
     volumes:
-    - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     environment:
-    - "POSTGRES_HOST_AUTH_METHOD=trust"
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+  # smtp4dev service    
   smtp4dev:
     image: rnwood/smtp4dev:v3
     restart: always
@@ -25,9 +27,29 @@ services:
       - '25:25'
       - '143:143'
     volumes:
-        - smtp4dev-data:/smtp4dev
+      - smtp4dev-data:/smtp4dev
     environment:
       - ServerOptions__HostName=smtp4dev
+  # redis service    
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 60 1 --loglevel warning
+    privileged: true
+  # worker
+
+  worker:
+    build: .
+    command: celery -A Core worker -l info
+    depends_on:
+      - redis
+      - backend
+
+    volumes:
+      - .:/app
 
 volumes:
   postgres_data:

@@ -9,29 +9,56 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0001_initial'),
+        ("account", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
-            name='expire_date',
+            model_name="customuser",
+            name="expire_date",
             field=models.DateField(default=datetime.date(2026, 2, 16)),
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='mobile',
+            model_name="customuser",
+            name="mobile",
             field=models.CharField(blank=True, max_length=12, null=True),
         ),
         migrations.CreateModel(
-            name='Profile',
+            name="Profile",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(null=True, upload_to='Image/acount')),
-                ('first_name', models.CharField(blank=True, max_length=100, null=True)),
-                ('last_name', models.CharField(blank=True, max_length=100, null=True)),
-                ('national_code', models.CharField(blank=True, max_length=10, null=True)),
-                ('user_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "image",
+                    models.ImageField(null=True, upload_to="Image/acount"),
+                ),
+                (
+                    "first_name",
+                    models.CharField(blank=True, max_length=100, null=True),
+                ),
+                (
+                    "last_name",
+                    models.CharField(blank=True, max_length=100, null=True),
+                ),
+                (
+                    "national_code",
+                    models.CharField(blank=True, max_length=10, null=True),
+                ),
+                (
+                    "user_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="profile",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

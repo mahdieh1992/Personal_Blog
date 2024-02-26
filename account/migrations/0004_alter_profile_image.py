@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0003_alter_customuser_expire_date'),
+        ("account", "0003_alter_customuser_expire_date"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='profile',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='Image/acount'),
+            model_name="profile",
+            name="image",
+            field=models.ImageField(
+                blank=True, null=True, upload_to="Image/acount"
+            ),
         ),
     ]
