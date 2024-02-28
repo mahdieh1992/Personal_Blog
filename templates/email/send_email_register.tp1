@@ -1,0 +1,9 @@
+{% extends "mail_templated/base.tpl" %}
+
+{% block subject %}
+    Hello {{ user.name }}
+{% endblock %}
+
+{% block html %}
+    http://127.0.0.1/account/api/v1/register/verify_register/{{token}}</strong> 
+{% endblock %}

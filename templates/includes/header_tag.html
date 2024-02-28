@@ -16,6 +16,15 @@
                     </div>
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">account</a>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'account:register' %}" class="dropdown-item">Register</a>
+                        <a href="{% url 'account:login' %}" class="dropdown-item">Login</a>
+                        <a href="single.html" class="dropdown-item">Logout</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </nav>
