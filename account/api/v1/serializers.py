@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ...models import CustomUser,Profile
+from ...models import CustomUser, Profile
 from django.core.exceptions import ValidationError
 from django.contrib.auth import password_validation as passvalidate
 from django.contrib.auth import authenticate
@@ -71,29 +71,38 @@ class ResendVerifyEmailSerializer(serializers.Serializer):
 
 class LoginSerializer(serializers.Serializer):
     """
-        serializer for login user and checking
-        user exists and password correct , user is confirmed
-    """ 
-    email=serializers.CharField()
-    password=serializers.CharField()
+    serializer for login user and checking
+    user exists and password correct , user is confirmed
+    """
+
+    email = serializers.CharField()
+    password = serializers.CharField()
+
     def validate(self, data):
-        email=data.get('email')
-        password=data.get('password')
-        request=self.context.get('request')
-        get_user=authenticate(request,email=email,password=password)
-        if get_user is not None: 
-            if get_user.is_confirm and get_user.is_active==True:
-                    data['user']=get_user
-                    return data
-            raise ValidationError('your account blocked',code='account_blocked')
-        
-        raise ValidationError('email or password invalid',code='user_or_password_wrong')  
+        email = data.get("email")
+        password = data.get("password")
+        request = self.context.get("request")
+        get_user = authenticate(request, email=email, password=password)
+        if get_user is not None:
+            if get_user.is_confirm and get_user.is_active is True:
+                data["user"] = get_user
+                return data
+            raise ValidationError(
+                "your account blocked", code="account_blocked"
+            )
+
+        raise ValidationError(
+            "email or password invalid", code="user_or_password_wrong"
+        )
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     """
-        serializer for Edit user information 
+    serializer for Edit user information
     """
-    user_id=serializers.CharField(read_only=True)
+
+    user_id = serializers.CharField(read_only=True)
+
     class Meta:
-        model=Profile
-        fields=['user_id','first_name','last_name','national_code']
+        model = Profile
+        fields = ["user_id", "first_name", "last_name", "national_code"]

@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
-import celery
 from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -47,7 +46,6 @@ INSTALLED_APPS = [
     "Home",
     "account",
     "Blog",
-    "Comment",
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework.authtoken",
@@ -57,9 +55,7 @@ INSTALLED_APPS = [
     "faker",
     "django_celery_beat",
     "django_celery_results",
-    "django_filters"
-
-    
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -175,10 +171,10 @@ EMAIL_USE_TLS = False
 EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
 
-#config celery
+# config celery
 CELERY_BROKER_URL = "redis://redis:6379/2"
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_RESULT_BACKEND = "django-db"
+CELERY_CACHE_BACKEND = "django-cache"
 
 # config jwt
 SIMPLE_JWT = {
@@ -189,8 +185,8 @@ SIMPLE_JWT = {
 # clear tasks done
 CELERY_BEAT_SCHEDULE = {
     # Executes at 10 minutes
-    'delete_tasks_done':{
-        'task': 'account.tasks.delete_task_done',
-        'schedule': crontab('*/10'),
+    "delete_tasks_done": {
+        "task": "account.tasks.delete_task_done",
+        "schedule": crontab("*/10"),
     },
-} 
+}

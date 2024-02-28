@@ -6,8 +6,7 @@ from .views import (
     ResendVerifyEmailRegister,
     LoginUserView,
     LogoutUserView,
-    ProfileUser
-    
+    ProfileUser,
 )
 
 app_name = "AccountApi"
@@ -24,7 +23,7 @@ urlpatterns = [
         name="testSendEmail",
     ),
     path("testSendEmail/", SendEmail.as_view(), name="testSendEmail"),
-    path("login/",LoginUserView.as_view(),name="login"),
-    path("logout/",LogoutUserView.as_view(),name="logout"),
-    path("profile/",ProfileUser.as_view(),name="profile")
+    path("login/", LoginUserView.as_view(), name="login"),
+    path("logout/", LogoutUserView.as_view(), name="logout"),
+    path("profile/", ProfileUser.as_view(), name="profile"),
 ]

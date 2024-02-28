@@ -18,7 +18,8 @@ date_now = date_now.replace(year=year_add)
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
-    Use this option if i want to start from scratch by creating my own,completely new user model.
+    Use this option if i want to start
+    from scratch by creating my own,completely new user model.
 
     """
 
@@ -64,7 +65,7 @@ class Profile(models.Model):
                 f"<img src='{self.image.url}', width='70', height='70'>"
             )
         else:
-            return format_html(f"<h1>Not exists image</h1>")
+            return format_html('<h1>Not exists image</h1>')
 
 
 @receiver(post_save, sender=CustomUser)
@@ -75,4 +76,3 @@ def register_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user_id=instance)
         Token.objects.create(user=instance)
-

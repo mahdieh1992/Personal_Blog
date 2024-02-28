@@ -7,18 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0004_alter_profile_image'),
+        ("account", "0004_alter_profile_image"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customuser',
-            name='expire_date',
+            model_name="customuser",
+            name="expire_date",
             field=models.DateField(default=datetime.date(2026, 2, 23)),
         ),
         migrations.AlterField(
-            model_name='profile',
-            name='national_code',
+            model_name="profile",
+            name="national_code",
             field=models.CharField(blank=True, max_length=10),
         ),
     ]

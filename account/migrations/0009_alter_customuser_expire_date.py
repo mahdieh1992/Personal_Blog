@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0008_alter_customuser_expire_date'),
+        ("account", "0008_alter_customuser_expire_date"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customuser',
-            name='expire_date',
+            model_name="customuser",
+            name="expire_date",
             field=models.DateField(default=datetime.date(2026, 2, 25)),
         ),
     ]
