@@ -1,10 +1,10 @@
 from django.db import models
-from datetime import date
+import datetime
 from django.contrib.auth import get_user_model
 
-get_date = date.today()
-year_add = get_date.year + 2
-get_date = get_date.replace(year=year_add)
+year = 2025
+month = 12
+get_date = datetime.date(year, month, 29)
 
 user = get_user_model()
 
@@ -53,6 +53,7 @@ class Comment(models.Model):
         on_delete=models.CASCADE,
         related_name="reply",
     )
+    reply_count = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.author.email} {self.blog}"

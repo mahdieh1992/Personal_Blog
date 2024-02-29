@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 from .manager import CustomUserManager
 from django.utils import timezone
-from datetime import date
+import datetime
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.html import format_html
@@ -11,9 +11,9 @@ from rest_framework.authtoken.models import Token
 
 # Create your models here.
 
-date_now = date.today()
-year_add = date_now.year + 2
-date_now = date_now.replace(year=year_add)
+year = 2025
+month = 12
+date_now = datetime.date(year, month, 29)
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -65,7 +65,7 @@ class Profile(models.Model):
                 f"<img src='{self.image.url}', width='70', height='70'>"
             )
         else:
-            return format_html('<h1>Not exists image</h1>')
+            return format_html("<h1>Not exists image</h1>")
 
 
 @receiver(post_save, sender=CustomUser)
