@@ -1,4 +1,4 @@
-name: Docker Blog
+name: Blog Test & Deploy
 
 on:
   push:
@@ -8,7 +8,8 @@ on:
 
 jobs:
 
-  build:
+  Test:
+    name: Test
 
     runs-on: ubuntu-latest
 
@@ -18,3 +19,21 @@ jobs:
       run: docker-compose up -d
     - name: testing with pytest
       run: docker-compose exec -T backend sh -c "flake8 && pytest ."
+
+  Deploy:
+    name: Deploy
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: command deploy
+    - uses: appleboy/ssh-action@master
+    with:
+        Username:${{secrets.USERNAME}}
+        Password:${{secrets.PASSWORD}}
+        Host:${{secrets.HOST}}
+        Port:${{secrets.PORT}}
+        script: ls
+
+         
