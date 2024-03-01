@@ -30,11 +30,11 @@ jobs:
     - name: command deploy
       uses: appleboy/ssh-action@master
     with:
-     Username:${{secrets.USERNAME}}
-     Password:${{secrets.PASSWORD}}
-     Host:${{secrets.HOST}}
-     Port:${{secrets.PORT}}
-     script:ls    
+     Username: ${{secrets.USERNAME}}
+     Password: ${{secrets.PASSWORD}}
+     Host: ${{secrets.HOST}}
+     Port: ${{secrets.PORT}}
+     script: ls    
  
       
          
