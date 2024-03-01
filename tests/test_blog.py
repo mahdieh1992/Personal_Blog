@@ -74,8 +74,8 @@ class Test_Blog:
                 "title": fake.name(),
                 "shortdescription": fake.name(),
                 "body": fake.text(),
-                "expire_date": '2024-08-09',
-                "modify_date": "2024-08-09"
+                "expire_date": "2024-08-09",
+                "modify_date": "2024-08-09",
             }
             print(data_blog)
             url_login = reverse("account:AccountApi:login")

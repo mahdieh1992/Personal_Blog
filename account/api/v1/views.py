@@ -1,7 +1,4 @@
-from rest_framework.generics import (
-    CreateAPIView,
-    GenericAPIView
-)
+from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from .serializers import (
@@ -106,10 +103,7 @@ class ResendVerifyEmailRegister(GenericAPIView):
             send_email = ThreadEmail(email)
             send_email.start()
             return Response(
-                {
-                    "detail":
-                    "dear user we again sended email contain a token"
-                },
+                {"detail": "dear user we again sended email contain a token"},
                 status=status.HTTP_200_OK,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

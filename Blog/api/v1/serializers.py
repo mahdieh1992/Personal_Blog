@@ -3,11 +3,18 @@ from ...models import Blog, Category, Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
+
+    reply_count = serializers.SerializerMethodField()
     author = serializers.CharField(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ["blog", "author", "body", "create_date", "parent"]
+        fields = ["author", "body", "create_date", "parent", "reply_count"]
+
+    def get_reply_count(self, obj):
+        if obj.is_parent:
+            return obj.children().count()
+        return 0
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -30,7 +37,7 @@ class CreateBlogSerializer(serializers.ModelSerializer):
             "body",
             "image",
             "create_date",
-            "expire_date"
+            "expire_date",
         ]
 
 
@@ -46,5 +53,6 @@ class BlogListSerializer(CreateBlogSerializer):
         request = self.context.get("request")
         if not request.parser_context.get("kwargs").get("pk"):
             rep.pop("body")
+            rep.pop("comment")
             return rep
         return rep

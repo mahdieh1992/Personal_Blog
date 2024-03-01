@@ -15,7 +15,10 @@ from rest_framework.decorators import action
 from .pagination import ResultPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-
+from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 user = get_user_model()
 
@@ -156,12 +159,37 @@ class CategoryView(viewsets.ModelViewSet):
 
 
 class CommentView(viewsets.ModelViewSet):
-    queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+    """
+    create and show comment
+    """
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+
+    @action(detail=True, methods=["post"])
+    def create(self, request, pk):
+        blog_object = get_object_or_404(Blog, id=pk)
+        data = self.request.data
+        if "parent" in data:
+            parent = data["parent"]
+        else:
+            parent = 0
+        body = data.get("body")
+        obj = Comment.objects.create(
+            author=self.request.user,
+            blog=blog_object,
+            parent_id=parent,
+            body=body,
+        )
+        serializer = self.get_serializer(obj, data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(author=self.request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @method_decorator(cache_page(60 * 20))
+    @method_decorator(vary_on_cookie)
+    @action(detail=False, methods=["get"])
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
