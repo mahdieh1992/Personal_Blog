@@ -21,7 +21,9 @@ jobs:
       run: docker-compose exec -T backend sh -c "flake8 && pytest ."
 
   Deploy:
+    if: ${{ always() && contains(join(needs.*.result,','),'SUCCESS')}}
     name: Deploy 
+    needs: Test
 
     runs-on: ubuntu-latest
 
