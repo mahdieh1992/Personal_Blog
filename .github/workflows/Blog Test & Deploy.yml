@@ -36,7 +36,7 @@ jobs:
          password: ${{secrets.PASSWORD}}
          host: ${{secrets.HOST}}
          port: ${{secrets.PORT}}
-         script:
+         script: |
           cd ${{secrets.PROJECTPATH}}
           docker-compose -f docker-compose-stage.yml stop
           git pull
